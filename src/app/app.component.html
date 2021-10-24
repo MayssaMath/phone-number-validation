@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="inner">
+      <form>
+        <div class="form-holder">
+          <h2 class="title">Enter your Country Code & your Phone Number </h2>
+          <h2 class="title" ></h2>
+          <table>
+          <tr>
+            <td>
+              <select
+              (click)="getAlpha2Codes()"
+              name="countryCode"
+              [(ngModel)]="countryCode"
+              >
+              <option selected disabled>Country</option>
+              <option *ngFor="let countrycode of codes">{{ countrycode }}</option>
+              </select>
+            </td>
+            <td>
+              <p>
+              <input class="form-control"
+              name="number"
+              placeholder="Phone number"
+              [(ngModel)]="number">
+              </p>    
+            </td>
+          </tr>
+          </table>
+        </div>
+        <button type="submit" class="btn" (click)="verify()"
+         [disabled] =" countryCode==null || !number "  
+         [ngStyle]="{'cursor': ( countryCode==null || !number ? 'not-allowed':'pointer')}">  
+          <span>Verify</span>
+        </button>
+         <!--if the field is not empty and the phone number entered is wrong shows the msg-->
+        <div class="errorMsg" *ngIf="wrongNumber() && number"> 
+          <p>Please enter a numeric phone number!</p>
+        </div>
+          <!--if the number is valid but doesn't match with the country code shows the msg-->
+          <div class="errorMsg" 
+          *ngIf="!verifNumber && response && !wrongNumber()">
+          <p>The phone number doesn't match the country code!</p>
+          </div>
+          <!--if the number is valid and matchs with the country code shows the msg-->
+          <div class="successMsg" *ngIf="verifNumber && !wrongNumber()">
+          <p>Phone number verified!</p>
+          </div>
+
+      </form>
+      
+    </div>
+    
+  </div>
+  
